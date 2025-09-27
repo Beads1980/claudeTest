@@ -166,31 +166,136 @@ const HelicopterGame: React.FC = () => {
     ctx.save();
     ctx.translate(heli.x + heli.width / 2, heli.y + heli.height / 2);
 
-    // Body
-    ctx.fillStyle = '#FF6B6B';
-    ctx.fillRect(-25, -10, 50, 20);
+    const rotorSpeed = Date.now() * 0.05;
+    const tailRotorSpeed = Date.now() * 0.1;
 
-    // Cockpit
-    ctx.fillStyle = '#4ECDC4';
-    ctx.fillRect(-15, -10, 30, 15);
+    // Landing skids
+    ctx.fillStyle = '#666';
+    ctx.fillRect(-22, 12, 44, 3);
+    ctx.fillRect(-25, 10, 6, 8);
+    ctx.fillRect(19, 10, 6, 8);
 
-    // Main rotor
-    ctx.strokeStyle = '#333';
+    // Main body (fuselage)
+    ctx.fillStyle = '#FF4444';
+    ctx.beginPath();
+    ctx.ellipse(0, 2, 28, 12, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Body outline
+    ctx.strokeStyle = '#CC3333';
     ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(-35, -15);
-    ctx.lineTo(35, -15);
     ctx.stroke();
 
-    // Tail
-    ctx.fillStyle = '#FF6B6B';
-    ctx.fillRect(20, -5, 15, 10);
-
-    // Tail rotor
+    // Cockpit glass
+    ctx.fillStyle = '#87CEEB';
     ctx.beginPath();
-    ctx.moveTo(35, -8);
-    ctx.lineTo(35, 8);
+    ctx.ellipse(-5, -2, 18, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Cockpit frame
+    ctx.strokeStyle = '#666';
+    ctx.lineWidth = 1;
     ctx.stroke();
+
+    // Cockpit reflection
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.beginPath();
+    ctx.ellipse(-8, -5, 8, 4, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Tail boom
+    ctx.fillStyle = '#FF4444';
+    ctx.fillRect(20, -3, 25, 6);
+
+    // Tail boom outline
+    ctx.strokeStyle = '#CC3333';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(20, -3, 25, 6);
+
+    // Tail fin
+    ctx.fillStyle = '#FF6666';
+    ctx.beginPath();
+    ctx.moveTo(40, -3);
+    ctx.lineTo(45, -12);
+    ctx.lineTo(45, -3);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Main rotor mast
+    ctx.fillStyle = '#333';
+    ctx.fillRect(-2, -18, 4, 8);
+
+    // Spinning main rotor blades
+    ctx.strokeStyle = '#444';
+    ctx.lineWidth = 3;
+    ctx.save();
+    ctx.translate(0, -15);
+    ctx.rotate(rotorSpeed);
+
+    // Main rotor blade 1
+    ctx.beginPath();
+    ctx.moveTo(-45, 0);
+    ctx.lineTo(45, 0);
+    ctx.stroke();
+
+    // Main rotor blade 2 (90 degrees offset)
+    ctx.rotate(Math.PI / 2);
+    ctx.beginPath();
+    ctx.moveTo(-45, 0);
+    ctx.lineTo(45, 0);
+    ctx.stroke();
+
+    ctx.restore();
+
+    // Rotor hub
+    ctx.fillStyle = '#666';
+    ctx.beginPath();
+    ctx.arc(0, -15, 4, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Spinning tail rotor
+    ctx.save();
+    ctx.translate(45, 0);
+    ctx.rotate(tailRotorSpeed);
+
+    ctx.strokeStyle = '#444';
+    ctx.lineWidth = 2;
+
+    // Tail rotor blades
+    ctx.beginPath();
+    ctx.moveTo(0, -8);
+    ctx.lineTo(0, 8);
+    ctx.stroke();
+
+    ctx.rotate(Math.PI / 2);
+    ctx.beginPath();
+    ctx.moveTo(0, -8);
+    ctx.lineTo(0, 8);
+    ctx.stroke();
+
+    ctx.restore();
+
+    // Tail rotor hub
+    ctx.fillStyle = '#666';
+    ctx.beginPath();
+    ctx.arc(45, 0, 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Engine exhaust
+    ctx.fillStyle = '#333';
+    ctx.fillRect(15, 8, 8, 4);
+
+    // Navigation lights
+    ctx.fillStyle = '#00FF00'; // Green light
+    ctx.beginPath();
+    ctx.arc(-20, 0, 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#FF0000'; // Red light
+    ctx.beginPath();
+    ctx.arc(20, 0, 2, 0, Math.PI * 2);
+    ctx.fill();
 
     ctx.restore();
   };
